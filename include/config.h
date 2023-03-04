@@ -300,28 +300,18 @@ THE SOFTWARE.
 	#define USBD_MANUFACTURER_STRING (uint8_t *)"makerbase"
 	#define DFU_INTERFACE_STRING_FS	 (uint8_t *)"MKS UTC firmware upgrade interface"
 
-	#define TIM2_CLOCK_SPEED		 60000000
+	#define TIM2_CLOCK_SPEED		 64000000
 
 	#define CAN_CLOCK_SPEED			 80000000
 	#define NUM_CAN_CHANNEL			 1
 	#define CONFIG_CANFD			 1
-
-	#define LEDRX_GPIO_Port	  GPIOD
-	#define LEDRX_Pin		  GPIO_PIN_0
-	#define LEDRX_Mode		  GPIO_MODE_OUTPUT_PP
-	#define LEDRX_Active_High 1
-
-	#define LEDTX_GPIO_Port	  GPIOD
-	#define LEDTX_Pin		  GPIO_PIN_0
-	#define LEDTX_Mode		  GPIO_MODE_OUTPUT_PP
-	#define LEDTX_Active_High 1
 
 #elif defined(BOARD_fd_duo)
 	#define USBD_PRODUCT_STRING_FS	 (uint8_t *)"FD DUO gs_usb"
 	#define USBD_MANUFACTURER_STRING (uint8_t *)"iqury.us"
 	#define DFU_INTERFACE_STRING_FS	 (uint8_t *)"iqury.us firmware upgrade interface"
 
-	#define TIM2_CLOCK_SPEED		 60000000
+	#define TIM2_CLOCK_SPEED		 64000000
 
 	#define CAN_CLOCK_SPEED			 80000000
 	#define NUM_CAN_CHANNEL			 2

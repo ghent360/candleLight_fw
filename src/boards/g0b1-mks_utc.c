@@ -32,20 +32,6 @@ THE SOFTWARE.
 #include "led.h"
 #include "usbd_gs_can.h"
 
-#define nCANSTBY_Port		 GPIOA
-#define nCANSTBY_Pin		 GPIO_PIN_0     /* control xceiver standby, active low */
-#define nCANSTBY_Active_High 0
-
-#define LEDRX_GPIO_Port	  GPIOD
-#define LEDRX_Pin		  GPIO_PIN_0
-#define LEDRX_Mode		  GPIO_MODE_OUTPUT_PP
-#define LEDRX_Active_High 1
-
-#define LEDTX_GPIO_Port	  GPIOD
-#define LEDTX_Pin		  GPIO_PIN_0
-#define LEDTX_Mode		  GPIO_MODE_OUTPUT_PP
-#define LEDTX_Active_High 1
-
 static void mks_utc_setup(USBD_GS_CAN_HandleTypeDef *hcan)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -59,22 +45,14 @@ static void mks_utc_setup(USBD_GS_CAN_HandleTypeDef *hcan)
 
 	/* LEDs */
 
-	HAL_GPIO_WritePin(LEDRX_GPIO_Port, LEDRX_Pin, GPIO_INIT_STATE(LEDRX_Active_High));
-	GPIO_InitStruct.Pin = LEDRX_Pin;
-	GPIO_InitStruct.Mode = LEDRX_Mode;
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0, GPIO_INIT_STATE(1));
+	GPIO_InitStruct.Pin = GPIO_PIN_0;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LEDRX_GPIO_Port, &GPIO_InitStruct);
-
-	HAL_GPIO_WritePin(LEDTX_GPIO_Port, LEDTX_Pin, GPIO_INIT_STATE(LEDTX_Active_High));
-	GPIO_InitStruct.Pin = LEDTX_Pin;
-	GPIO_InitStruct.Mode = LEDTX_Mode;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(LEDTX_GPIO_Port, &GPIO_InitStruct);
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 	/* FDCAN */
-
 	RCC_PeriphCLKInitTypeDef PeriphClkInit = {
 		.PeriphClockSelection = RCC_PERIPHCLK_FDCAN,
 		.FdcanClockSelection = RCC_FDCANCLKSOURCE_PLL,
@@ -113,11 +91,11 @@ const struct BoardConfig config = {
 	.termination_set = mks_utc_termination_set,
 	.channels[0].interface = FDCAN1,
 	.leds[0] = {
-		.led_rx_port = LEDRX_GPIO_Port,
-		.led_rx_pin = LEDRX_Pin,
-		.led_rx_active_high = LEDRX_Active_High,
-		.led_tx_port = LEDTX_GPIO_Port,
-		.led_tx_pin = LEDTX_Pin,
-		.led_tx_active_high = LEDTX_Active_High,
+		.led_rx_port = GPIOD,
+		.led_rx_pin = GPIO_PIN_0,
+		.led_rx_active_high = 1,
+		.led_tx_port = GPIOD,
+		.led_tx_pin = GPIO_PIN_0,
+		.led_tx_active_high = 1,
 	},
 };
