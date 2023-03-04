@@ -89,13 +89,19 @@ const struct BoardConfig config = {
 	.setup = mks_utc_setup,
 	.phy_power_set = mks_utc_phy_power_set,
 	.termination_set = mks_utc_termination_set,
-	.channels[0].interface = FDCAN1,
-	.leds[0] = {
-		.led_rx_port = GPIOD,
-		.led_rx_pin = GPIO_PIN_0,
-		.led_rx_active_high = 1,
-		.led_tx_port = GPIOD,
-		.led_tx_pin = GPIO_PIN_0,
-		.led_tx_active_high = 1,
+	.channels[0] = {
+		.interface = FDCAN1,
+		.leds = {
+			[LED_RX] = {
+				.port = GPIOD,
+				.pin = GPIO_PIN_0,
+				.active_high = 1,
+			},
+			[LED_TX] = {
+				.port = GPIOD,
+				.pin = GPIO_PIN_0,
+				.active_high = 1,
+			}
+		},
 	},
 };

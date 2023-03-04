@@ -137,6 +137,7 @@ void can_enable(can_data_t *channel, uint32_t mode)
 	}
 
 	HAL_FDCAN_Init(&channel->channel);
+	HAL_FDCAN_EnableISOMode(&channel->channel);
 
 	/* Configure reception filter to Rx FIFO 0 on both FDCAN instances */
 	FDCAN_FilterTypeDef sFilterConfig = {
@@ -158,8 +159,6 @@ void can_enable(can_data_t *channel, uint32_t mode)
 	HAL_FDCAN_ConfigGlobalFilter(&channel->channel,
 								 FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_ACCEPT_IN_RX_FIFO0,
 								 FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE);
-
-	HAL_FDCAN_EnableISOMode(&channel->channel);
 
 	config.phy_power_set(channel, true);
 

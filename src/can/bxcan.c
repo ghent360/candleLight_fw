@@ -263,6 +263,12 @@ bool can_send(can_data_t *channel, struct gs_host_frame *frame)
 		/* request transmission */
 		mb->TIR |= CAN_TI0R_TXRQ;
 
+		/*
+		 * struct gs_host_frame in CAN-2.0 mode doesn't use flags from
+		 * Host -> Device, so initialize here to 0.
+		 */
+		frame->flags = 0;
+
 		return true;
 	} else {
 		return false;

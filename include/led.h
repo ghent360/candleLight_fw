@@ -33,11 +33,11 @@ THE SOFTWARE.
 #define LED_UPDATE_INTERVAL 10  // number of ticks from HAL_GetTick
 
 typedef enum {
-	led_mode_off,
-	led_mode_normal,
-	led_mode_warn,
-	led_mode_error,
-	led_mode_sequence
+	LED_MODE_OFF,
+	LED_MODE_NORMAL,
+	LED_MODE_WARN,
+	LED_MODE_ERROR,
+	LED_MODE_SEQUENCE
 } led_mode_t;
 
 typedef enum {

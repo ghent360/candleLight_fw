@@ -32,24 +32,6 @@ THE SOFTWARE.
 #include "led.h"
 #include "usbd_gs_can.h"
 
-#define nCANSTBY_Port		 GPIOA
-#define nCANSTBY_Pin		 GPIO_PIN_0     /* control xceiver standby, active low */
-#define nCANSTBY_Active_High 0
-
-// These are still defined in config.h
-// No need to re-define them here
-#if 0
-#define LEDRX_GPIO_Port		 GPIOB
-#define LEDRX_Pin			 GPIO_PIN_4
-#define LEDRX_Mode			 GPIO_MODE_OUTPUT_PP
-#define LEDRX_Active_High	 1
-
-#define LEDTX_GPIO_Port		 GPIOB
-#define LEDTX_Pin			 GPIO_PIN_3
-#define LEDTX_Mode			 GPIO_MODE_OUTPUT_PP
-#define LEDTX_Active_High	 1
-#endif
-
 static void nucleo_g0b1re_setup(USBD_GS_CAN_HandleTypeDef *hcan)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -164,22 +146,34 @@ const struct BoardConfig config = {
 	.setup = nucleo_g0b1re_setup,
 	.phy_power_set = nucleo_g0b1re_phy_power_set,
 	.termination_set = nucleo_g0b1re_termination_set,
-	.channels[0].interface = FDCAN1,
-	.channels[1].interface = FDCAN2,
-	.leds[0] = {
-		.led_rx_port = LEDRX_GPIO_Port,
-		.led_rx_pin = LEDRX_Pin,
-		.led_rx_active_high = LEDRX_Active_High,
-		.led_tx_port = LEDTX_GPIO_Port,
-		.led_tx_pin = LEDTX_Pin,
-		.led_tx_active_high = LEDTX_Active_High,
+	.channels[0] = {
+		.interface = FDCAN1,
+		.leds = {
+			[LED_RX] = {
+				.port = LEDRX_GPIO_Port,
+				.pin = LEDRX_Pin,
+				.active_high = LEDRX_Active_High,
+			},
+			[LED_TX] = {
+				.port = LEDTX_GPIO_Port,
+				.pin = LEDTX_Pin,
+				.active_high = LEDTX_Active_High,
+			},
+		},
 	},
-	.leds[1] = {
-		.led_rx_port = LEDRX_GPIO_Port,
-		.led_rx_pin = LEDRX_Pin,
-		.led_rx_active_high = LEDRX_Active_High,
-		.led_tx_port = LEDTX_GPIO_Port,
-		.led_tx_pin = LEDTX_Pin,
-		.led_tx_active_high = LEDTX_Active_High,
+	.channels[1] = {
+		.interface = FDCAN2,
+		.leds = {
+			[LED_RX] = {
+				.port = LEDRX_GPIO_Port,
+				.pin = LEDRX_Pin,
+				.active_high = LEDRX_Active_High,
+			},
+			[LED_TX] = {
+				.port = LEDTX_GPIO_Port,
+				.pin = LEDTX_Pin,
+				.active_high = LEDTX_Active_High,
+			},
+		},
 	},
 };

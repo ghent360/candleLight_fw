@@ -107,22 +107,34 @@ const struct BoardConfig config = {
 	.setup = fd_duo_setup,
 	.phy_power_set = fd_duo_phy_power_set,
 	.termination_set = fd_duo_termination_set,
-	.channels[0].interface = FDCAN1,
-	.channels[1].interface = FDCAN2,
-	.leds[0] = {
-		.led_rx_port = GPIOB,
-		.led_rx_pin = GPIO_PIN_5,
-		.led_rx_active_high = 0,
-		.led_tx_port = GPIOB,
-		.led_tx_pin = GPIO_PIN_4,
-		.led_tx_active_high = 0,
+	.channels[0] = {
+		.interface = FDCAN1,
+		.leds = {
+			[LED_RX] = {
+				.port = GPIOB,
+				.pin = GPIO_PIN_5,
+				.active_high = 0,
+			},
+			[LED_TX] = {
+				.port = GPIOB,
+				.pin = GPIO_PIN_4,
+				.active_high = 0,
+			}
+		},
 	},
-	.leds[1] = {
-		.led_rx_port = GPIOB,
-		.led_rx_pin = GPIO_PIN_11,
-		.led_rx_active_high = 0,
-		.led_tx_port = GPIOB,
-		.led_tx_pin = GPIO_PIN_12,
-		.led_tx_active_high = 0,
+	.channels[1] = {
+		.interface = FDCAN2,
+		.leds = {
+			[LED_RX] = {
+				.port = GPIOB,
+				.pin = GPIO_PIN_11,
+				.active_high = 0,
+			},
+			[LED_TX] = {
+				.port = GPIOB,
+				.pin = GPIO_PIN_12,
+				.active_high = 0,
+			}
+		},
 	},
 };

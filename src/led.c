@@ -77,7 +77,7 @@ static uint32_t led_set_sequence_step(led_data_t *leds, uint32_t step_num)
 
 void led_run_sequence(led_data_t *leds, const led_seq_step_t *sequence, int32_t num_repeat)
 {
-	leds->mode = led_mode_sequence;
+	leds->mode = LED_MODE_SEQUENCE;
 	leds->sequence = sequence;
 	leds->seq_num_repeat = num_repeat;
 	led_set_sequence_step(leds, 0);
@@ -149,17 +149,17 @@ void led_update(led_data_t *leds)
 
 	switch (leds->mode) {
 
-		case led_mode_off:
+		case LED_MODE_OFF:
 			led_set(&leds->led_state[LED_RX], false);
 			led_set(&leds->led_state[LED_TX], false);
 			break;
 
-		case led_mode_normal:
+		case LED_MODE_NORMAL:
 			led_update_normal_mode(&leds->led_state[LED_RX], now);
 			led_update_normal_mode(&leds->led_state[LED_TX], now);
 			break;
 
-		case led_mode_sequence:
+		case LED_MODE_SEQUENCE:
 			led_update_sequence(leds);
 			break;
 

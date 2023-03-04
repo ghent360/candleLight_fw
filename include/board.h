@@ -29,21 +29,19 @@ THE SOFTWARE.
 
 #include "usbd_gs_can.h"
 
+struct LEDConfig {
+	void *port;
+	uint16_t pin;
+	bool active_high;
+};
+
 struct BoardChannelConfig {
 #if defined(STM32G0)
 	FDCAN_GlobalTypeDef *interface;
 #else
 	CAN_TypeDef *interface;
 #endif
-};
-
-struct LedChannelConfig {
-	void* led_rx_port;
-	uint16_t led_rx_pin;
-	bool led_rx_active_high;
-	void* led_tx_port;
-	uint16_t led_tx_pin;
-	bool led_tx_active_high;
+	struct LEDConfig leds[LED_MAX];
 };
 
 struct BoardConfig {
@@ -52,7 +50,6 @@ struct BoardConfig {
 	void (*termination_set)(can_data_t *channel, enum gs_can_termination_state state);
 
 	struct BoardChannelConfig channels[NUM_CAN_CHANNEL];
-	struct LedChannelConfig leds[NUM_CAN_CHANNEL];
 };
 
 extern const struct BoardConfig config;

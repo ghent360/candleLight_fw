@@ -285,15 +285,15 @@ THE SOFTWARE.
 	#define NUM_CAN_CHANNEL			 2
 	#define CONFIG_CANFD			 1
 
-	#define LEDRX_GPIO_Port	  GPIOA
-	#define LEDRX_Pin		  GPIO_PIN_6
-	#define LEDRX_Mode		  GPIO_MODE_OUTPUT_PP
-	#define LEDRX_Active_High 1
+	#define LEDRX_GPIO_Port			 GPIOA
+	#define LEDRX_Pin				 GPIO_PIN_5
+	#define LEDRX_Mode				 GPIO_MODE_OUTPUT_PP
+	#define LEDRX_Active_High		 1
 
-	#define LEDTX_GPIO_Port	  GPIOA
-	#define LEDTX_Pin		  GPIO_PIN_5
-	#define LEDTX_Mode		  GPIO_MODE_OUTPUT_PP
-	#define LEDTX_Active_High 1
+	#define LEDTX_GPIO_Port			 GPIOA
+	#define LEDTX_Pin				 GPIO_PIN_5
+	#define LEDTX_Mode				 GPIO_MODE_OUTPUT_PP
+	#define LEDTX_Active_High		 1
 
 #elif defined(BOARD_mks_utc)
 	#define USBD_PRODUCT_STRING_FS	 (uint8_t *)"MKS UTC gs_usb"
