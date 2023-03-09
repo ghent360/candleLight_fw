@@ -142,10 +142,17 @@ nucleo_g0b1re_termination_set(can_data_t *channel,
 	}
 }
 
+static void
+nucleo_g0b1re_delay_config(can_data_t *channel)
+{
+	HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
+}
+
 const struct BoardConfig config = {
 	.setup = nucleo_g0b1re_setup,
 	.phy_power_set = nucleo_g0b1re_phy_power_set,
 	.termination_set = nucleo_g0b1re_termination_set,
+	.delay_config = nucleo_g0b1re_delay_config,
 	.channels[0] = {
 		.interface = FDCAN1,
 		.leds = {
