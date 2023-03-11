@@ -131,7 +131,7 @@ const struct BoardConfig config = {
 		.leds = {
 			[LED_RX] = {
 				.port = GPIOA,
-				.pin = GPIO_PIN_6,
+				.pin = GPIO_PIN_5,
 				.active_high = 0,
 			},
 			[LED_TX] = {
