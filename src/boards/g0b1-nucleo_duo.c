@@ -117,12 +117,12 @@ const struct BoardConfig config = {
 			[LED_RX] = {
 				.port = GPIOA,
 				.pin = GPIO_PIN_5,
-				.active_high = 0,
+				.active_high = 1,
 			},
 			[LED_TX] = {
 				.port = GPIOA,
 				.pin = GPIO_PIN_5,
-				.active_high = 0,
+				.active_high = 1,
 			}
 		},
 	},
@@ -132,12 +132,12 @@ const struct BoardConfig config = {
 			[LED_RX] = {
 				.port = GPIOA,
 				.pin = GPIO_PIN_5,
-				.active_high = 0,
+				.active_high = 1,
 			},
 			[LED_TX] = {
 				.port = GPIOA,
 				.pin = GPIO_PIN_5,
-				.active_high = 0,
+				.active_high = 1,
 			}
 		},
 	},
