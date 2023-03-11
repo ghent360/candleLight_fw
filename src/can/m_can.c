@@ -160,7 +160,7 @@ void can_enable(can_data_t *channel, uint32_t mode)
 								 FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_ACCEPT_IN_RX_FIFO0,
 								 FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE);
 
-	config.delay_config(channel);
+	config.delay_config(channel, (mode & GS_CAN_MODE_FD) != 0);
 	config.phy_power_set(channel, true);
 
 	// Start CAN using HAL

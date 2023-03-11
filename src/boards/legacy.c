@@ -180,8 +180,9 @@ static void legacy_phy_power_set(can_data_t *channel, bool enable) {
 	}
 }
 
-static void legacy_delay_config(can_data_t *channel) {
+static void legacy_delay_config(can_data_t *channel, bool fd_mode) {
     UNUSED(channel);
+    UNUSED(fd_mode);
 }
 
 const struct BoardConfig config = {

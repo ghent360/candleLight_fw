@@ -143,9 +143,10 @@ nucleo_g0b1re_termination_set(can_data_t *channel,
 }
 
 static void
-nucleo_g0b1re_delay_config(can_data_t *channel)
+nucleo_g0b1re_delay_config(can_data_t *channel, bool fd_mode)
 {
-	HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
+    UNUSED(fd_mode);
+    HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
 }
 
 const struct BoardConfig config = {

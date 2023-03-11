@@ -86,9 +86,10 @@ mks_utc_termination_set(can_data_t *channel,
 }
 
 static void
-mks_utc_delay_config(can_data_t *channel)
+mks_utc_delay_config(can_data_t *channel, bool fd_mode)
 {
-	HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
+    UNUSED(fd_mode);
+    HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
 }
 
 const struct BoardConfig config = {
