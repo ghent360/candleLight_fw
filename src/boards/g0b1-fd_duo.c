@@ -103,25 +103,10 @@ fd_duo_termination_set(can_data_t *channel,
     UNUSED(enable);
 }
 
-static void
-fd_duo_delay_config(can_data_t *channel, bool fd_mode)
-{
-    if (fd_mode)
-    {
-        // TJA1042/T3 requires delay compensation above 4Mbps
-        uint16_t sampling_point = channel->channel.Init.DataTimeSeg1 + 1;
-        HAL_FDCAN_ConfigTxDelayCompensation(&channel->channel, sampling_point, 2);
-        HAL_FDCAN_EnableTxDelayCompensation(&channel->channel);
-    } else {
-        HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
-    }
-}
-
 const struct BoardConfig config = {
 	.setup = fd_duo_setup,
 	.phy_power_set = fd_duo_phy_power_set,
 	.termination_set = fd_duo_termination_set,
-	.delay_config = fd_duo_delay_config,
 	.channels[0] = {
 		.interface = FDCAN1,
 		.leds = {

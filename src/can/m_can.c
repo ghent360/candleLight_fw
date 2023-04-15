@@ -89,11 +89,12 @@ void can_init(can_data_t *channel, FDCAN_GlobalTypeDef *instance)
 	channel->channel.Init.StdFiltersNbr = 0;
 	channel->channel.Init.ExtFiltersNbr = 0;
 	channel->channel.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
+	channel->speed = 0;
 }
 
 void can_set_bittiming(can_data_t *channel, const struct gs_device_bittiming *timing)
 {
-	const uint8_t tseg1 = timing->prop_seg + timing->phase_seg1;
+	const uint32_t tseg1 = timing->prop_seg + timing->phase_seg1;
 
 	channel->channel.Init.NominalSyncJumpWidth = timing->sjw;
 	channel->channel.Init.NominalTimeSeg1 = tseg1;
@@ -103,12 +104,14 @@ void can_set_bittiming(can_data_t *channel, const struct gs_device_bittiming *ti
 
 void can_set_data_bittiming(can_data_t *channel, const struct gs_device_bittiming *timing)
 {
-	const uint8_t tseg1 = timing->prop_seg + timing->phase_seg1;
+	const uint32_t tseg1 = timing->prop_seg + timing->phase_seg1;
+	const uint32_t tseg_total = tseg1 + timing->phase_seg2 + 1;
 
 	channel->channel.Init.DataSyncJumpWidth = timing->sjw;
 	channel->channel.Init.DataTimeSeg1 = tseg1;
 	channel->channel.Init.DataTimeSeg2 = timing->phase_seg2;
 	channel->channel.Init.DataPrescaler = timing->brp;
+	channel->speed = (CAN_CLOCK_SPEED / timing->brp) / tseg_total;
 }
 
 void can_enable(can_data_t *channel, uint32_t mode)
@@ -160,7 +163,15 @@ void can_enable(can_data_t *channel, uint32_t mode)
 								 FDCAN_ACCEPT_IN_RX_FIFO0, FDCAN_ACCEPT_IN_RX_FIFO0,
 								 FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE);
 
-	config.delay_config(channel, (mode & GS_CAN_MODE_FD) != 0);
+    /* TDC is only needed for bitrates beyond 2.5 MBit/s.
+     * This is mentioned in the "Bit Time Requirements for CAN FD"
+     * paper presented at the International CAN Conference 2013
+     */
+    if ((mode & GS_CAN_MODE_FD) != 0 && channel->speed > 2500000) {
+        uint32_t sampling_point = channel->channel.Init.DataTimeSeg1 + 1;
+        HAL_FDCAN_ConfigTxDelayCompensation(&channel->channel, sampling_point, 2);
+        HAL_FDCAN_EnableTxDelayCompensation(&channel->channel);
+	}
 	config.phy_power_set(channel, true);
 
 	// Start CAN using HAL

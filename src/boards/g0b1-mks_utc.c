@@ -85,18 +85,10 @@ mks_utc_termination_set(can_data_t *channel,
     UNUSED(enable);
 }
 
-static void
-mks_utc_delay_config(can_data_t *channel, bool fd_mode)
-{
-    UNUSED(fd_mode);
-    HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
-}
-
 const struct BoardConfig config = {
 	.setup = mks_utc_setup,
 	.phy_power_set = mks_utc_phy_power_set,
 	.termination_set = mks_utc_termination_set,
-	.delay_config = mks_utc_delay_config,
 	.channels[0] = {
 		.interface = FDCAN1,
 		.leds = {

@@ -92,25 +92,10 @@ nucleo_duo_termination_set(can_data_t *channel,
     UNUSED(enable);
 }
 
-static void
-nucleo_duo_delay_config(can_data_t *channel, bool fd_mode)
-{
-    if (fd_mode)
-    {
-        // SIT1051TK/T3 requires delay compensation above 4Mbps
-        uint16_t sampling_point = channel->channel.Init.DataTimeSeg1 + 1;
-        HAL_FDCAN_ConfigTxDelayCompensation(&channel->channel, sampling_point, 2);
-        HAL_FDCAN_EnableTxDelayCompensation(&channel->channel);
-    } else {
-        HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
-    }
-}
-
 const struct BoardConfig config = {
 	.setup = nucleo_duo_setup,
 	.phy_power_set = nucleo_duo_phy_power_set,
 	.termination_set = nucleo_duo_termination_set,
-	.delay_config = nucleo_duo_delay_config,
 	.channels[0] = {
 		.interface = FDCAN1,
 		.leds = {

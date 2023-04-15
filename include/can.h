@@ -49,6 +49,7 @@ typedef struct {
 	uint8_t phase_seg2;
 	uint8_t sjw;
 	uint8_t nr;
+	uint32_t speed; // The Data Rate speed in CAN-FD mode, otherwise 0
 } can_data_t;
 
 extern const struct gs_device_bt_const CAN_btconst;

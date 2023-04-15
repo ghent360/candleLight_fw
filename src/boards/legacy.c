@@ -180,16 +180,10 @@ static void legacy_phy_power_set(can_data_t *channel, bool enable) {
 	}
 }
 
-static void legacy_delay_config(can_data_t *channel, bool fd_mode) {
-    UNUSED(channel);
-    UNUSED(fd_mode);
-}
-
 const struct BoardConfig config = {
 	.setup = legacy_setup,
 	.phy_power_set = legacy_phy_power_set,
 	.termination_set = legacy_termination_set,
-	.delay_config = legacy_delay_config,
 	.channels[0] = {
 		.interface = CAN_INTERFACE,
 	    .leds = {
