@@ -171,6 +171,8 @@ void can_enable(can_data_t *channel, uint32_t mode)
         uint32_t sampling_point = channel->channel.Init.DataTimeSeg1 + 1;
         HAL_FDCAN_ConfigTxDelayCompensation(&channel->channel, sampling_point, 2);
         HAL_FDCAN_EnableTxDelayCompensation(&channel->channel);
+	} else {
+		HAL_FDCAN_DisableTxDelayCompensation(&channel->channel);
 	}
 	config.phy_power_set(channel, true);
 
